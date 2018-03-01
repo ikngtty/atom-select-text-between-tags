@@ -1,73 +1,58 @@
 'use babel';
 
-import SelectTextBetweenTags from '../lib/select-text-between-tags';
+// import SelectTextBetweenTags from '../lib/select-text-between-tags';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
 // To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe('SelectTextBetweenTags', () => {
-  let workspaceElement, activationPromise;
+describe('select-text-between-tags', () => {
 
-  beforeEach(() => {
-    workspaceElement = atom.views.getView(atom.workspace);
-    activationPromise = atom.packages.activatePackage('select-text-between-tags');
-  });
+  describe('when the :select event is triggred', () => {
 
-  describe('when the select-text-between-tags:select event is triggered', () => {
-    it('hides and shows the modal panel', () => {
-      // Before the activation event the view is not on the DOM, and no panel
-      // has been created
-      expect(workspaceElement.querySelector('.select-text-between-tags')).not.toExist();
+    describe('it selects between tags', () => {
+      let textEditor, textEditorElement;
 
-      // This is an activation event, triggering it will cause the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
-
-      waitsForPromise(() => {
-        return activationPromise;
+      beforeEach(() => {
+        waitsForPromise(() => atom.workspace.open('sample.html')
+          .then(() => {
+            textEditor = atom.workspace.getActiveTextEditor();
+            textEditorElement = atom.views.getView(textEditor);
+          }));
       });
 
-      runs(() => {
-        expect(workspaceElement.querySelector('.select-text-between-tags')).toExist();
+      it('runs as expected when the cursor is in text between tags', () => {
 
-        let selectTextBetweenTagsElement = workspaceElement.querySelector('.select-text-between-tags');
-        expect(selectTextBetweenTagsElement).toExist();
+        // Set the cursor.
+        textEditor.setSelectedBufferRange([[8, 54], [8, 62]]);
+        expect(textEditor.getSelectedText()).toBe('a sample');
 
-        let selectTextBetweenTagsPanel = atom.workspace.panelForItem(selectTextBetweenTagsElement);
-        expect(selectTextBetweenTagsPanel.isVisible()).toBe(true);
-        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
-        expect(selectTextBetweenTagsPanel.isVisible()).toBe(false);
+        // Run.
+        atom.commands.dispatch(textEditorElement, 'select-text-between-tags:select');
+
+        // Selection results in as below.
+        expect(textEditor.getSelectedBufferRange()).toBe([8, 39], [8, 68]);
+        expect(textEditor.getSelectedText()).toBe('Hello! This is a sample file.');
+
       });
+
+      // TODO: other cursor
+
     });
 
-    it('hides and shows the view', () => {
-      // This test shows you an integration test testing at the view level.
+    describe('it is fast enough', () => {
 
-      // Attaching the workspaceElement to the DOM is required to allow the
-      // `toBeVisible()` matchers to work. Anything testing visibility or focus
-      // requires that the workspaceElement is on the DOM. Tests that attach the
-      // workspaceElement to the DOM are generally slower than those off DOM.
-      jasmine.attachToDOM(workspaceElement);
-
-      expect(workspaceElement.querySelector('.select-text-between-tags')).not.toExist();
-
-      // This is an activation event, triggering it causes the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
-
-      waitsForPromise(() => {
-        return activationPromise;
+      it('runs as expected when text is long', () => {
+        // TODO:
       });
 
-      runs(() => {
-        // Now we can test for view visibility
-        let selectTextBetweenTagsElement = workspaceElement.querySelector('.select-text-between-tags');
-        expect(selectTextBetweenTagsElement).toBeVisible();
-        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
-        expect(selectTextBetweenTagsElement).not.toBeVisible();
+      it('runs as expected when text is nested deeply', () => {
+        // TODO:
       });
+
     });
+
   });
+
 });
