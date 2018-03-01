@@ -1,0 +1,18 @@
+{
+  "name": "select-text-between-tags",
+  "main": "./lib/select-text-between-tags",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "select-text-between-tags:toggle"
+  },
+  "repository": "https://github.com/atom/select-text-between-tags",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}

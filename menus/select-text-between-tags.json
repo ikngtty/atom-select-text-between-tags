@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle select-text-between-tags",
+        "command": "select-text-between-tags:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "select-text-between-tags",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "select-text-between-tags:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
