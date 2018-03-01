@@ -1,5 +1,5 @@
 {
   "atom-workspace": {
-    "ctrl-alt-o": "select-text-between-tags:toggle"
+    "cmd->": "select-text-between-tags:select"
   }
 }

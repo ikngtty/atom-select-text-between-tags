@@ -15,7 +15,7 @@ describe('SelectTextBetweenTags', () => {
     activationPromise = atom.packages.activatePackage('select-text-between-tags');
   });
 
-  describe('when the select-text-between-tags:toggle event is triggered', () => {
+  describe('when the select-text-between-tags:select event is triggered', () => {
     it('hides and shows the modal panel', () => {
       // Before the activation event the view is not on the DOM, and no panel
       // has been created
@@ -23,7 +23,7 @@ describe('SelectTextBetweenTags', () => {
 
       // This is an activation event, triggering it will cause the package to be
       // activated.
-      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:toggle');
+      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
 
       waitsForPromise(() => {
         return activationPromise;
@@ -37,7 +37,7 @@ describe('SelectTextBetweenTags', () => {
 
         let selectTextBetweenTagsPanel = atom.workspace.panelForItem(selectTextBetweenTagsElement);
         expect(selectTextBetweenTagsPanel.isVisible()).toBe(true);
-        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:toggle');
+        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
         expect(selectTextBetweenTagsPanel.isVisible()).toBe(false);
       });
     });
@@ -55,7 +55,7 @@ describe('SelectTextBetweenTags', () => {
 
       // This is an activation event, triggering it causes the package to be
       // activated.
-      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:toggle');
+      atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
 
       waitsForPromise(() => {
         return activationPromise;
@@ -65,7 +65,7 @@ describe('SelectTextBetweenTags', () => {
         // Now we can test for view visibility
         let selectTextBetweenTagsElement = workspaceElement.querySelector('.select-text-between-tags');
         expect(selectTextBetweenTagsElement).toBeVisible();
-        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:toggle');
+        atom.commands.dispatch(workspaceElement, 'select-text-between-tags:select');
         expect(selectTextBetweenTagsElement).not.toBeVisible();
       });
     });
