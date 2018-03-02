@@ -14,19 +14,43 @@ describe('select-text-between-tags', () => {
     describe('it selects between tags', () => {
       let textEditor, textEditorElement;
 
-      beforeEach(() => {
+      // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
+      // an unexpected object.
+      beforeEach(function() {
+
+        this.addMatchers({
+          toBeBeforeRun: function(expected) {
+            // comparison is same as 'toBe'.
+            const pass = (this.actual === expected);
+
+            // Define the error message.
+            let message = '';
+            if (pass) {
+              message = `Expected '${this.actual}' not to be '${expected}'.`;
+            } else {
+              message = `Expected '${this.actual}' to be '${expected}'.`;
+            }
+            message += ' This failure occurs in a preparation phase.';
+            message += ' The spec is likely to break.';
+            this.message = () => message;
+
+            return pass;
+          }
+        });
+
         waitsForPromise(() => atom.workspace.open('sample.html')
           .then(() => {
             textEditor = atom.workspace.getActiveTextEditor();
             textEditorElement = atom.views.getView(textEditor);
           }));
+
       });
 
       it('runs as expected when the cursor is in text between tags', () => {
 
         // Set the cursor.
         textEditor.setSelectedBufferRange([[8, 54], [8, 62]]);
-        expect(textEditor.getSelectedText()).toBe('a sample');
+        expect(textEditor.getSelectedText()).toBeBeforeRun('a sample');
 
         // Run.
         atom.commands.dispatch(textEditorElement, 'select-text-between-tags:select');
