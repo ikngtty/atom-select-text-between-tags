@@ -1,6 +1,7 @@
 'use babel';
 
 // import SelectTextBetweenTags from '../lib/select-text-between-tags';
+import SpecHelpers from './helpers/spec-helpers';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -16,28 +17,13 @@ describe('select-text-between-tags', () => {
 
       // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
       // an unexpected object.
+      // NOTE: I wanna use 'beforeAll' to avoid to call this many times,
+      // but Jasmine's version is 1.3.1.
       beforeEach(function() {
 
-        this.addMatchers({
-          toBeBeforeRun: function(expected) {
-            // comparison is same as 'toBe'.
-            const pass = (this.actual === expected);
+        SpecHelpers.addMyMatchers(this);
 
-            // Define the error message.
-            let message = '';
-            if (pass) {
-              message = `Expected '${this.actual}' not to be '${expected}'.`;
-            } else {
-              message = `Expected '${this.actual}' to be '${expected}'.`;
-            }
-            message += ' This failure occurs in a preparation phase.';
-            message += ' The spec is likely to break.';
-            this.message = () => message;
-
-            return pass;
-          }
-        });
-
+        // Open the text file prepared for these tests.
         waitsForPromise(() => atom.workspace.open('sample.html')
           .then(() => {
             textEditor = atom.workspace.getActiveTextEditor();
