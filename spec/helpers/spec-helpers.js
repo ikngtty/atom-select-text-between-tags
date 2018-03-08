@@ -48,4 +48,54 @@ export default class {
     });
   }
 
+  /**
+   * Expect the whole behavior about selection.
+   *
+   * NOTE: Atom's global variables are used.
+   * NOTE: Requires that a text editor is active.
+   *
+   * @param  {Object} stateBeforeRun
+   * @param  {string} runCommand
+   * @param  {Object} expectedState
+   * @param  {Object[]} textVerificationOptions
+   * @return {undefined}
+   */
+  static expectSelection(
+    stateBeforeRun,
+    runCommand,
+    expectedState,
+    textVerificationOptions = []) {
+
+      const textEditor = atom.workspace.getActiveTextEditor();
+      const textEditorElement = atom.views.getView(textEditor);
+
+      // Verify text in the editor.
+      // (It is expected that the verified part is around the position
+      //  the cursor will be set on. The purpose is to detect differnce
+      //  between the specified cursor position and the expected one,
+      //  or unexpected changes in the text.)
+      for (const vOption of textVerificationOptions) {
+        textEditor.setSelectedBufferRange(vOption.range);
+        const actualText = textEditor.getSelectedText();
+
+        expect(actualText).toBeBeforeRun(vOption.text);
+      }
+
+      // Set the cursor.
+      textEditor.setCursorBufferPosition(stateBeforeRun.cursorPosition);
+
+      // Run.
+      atom.commands.dispatch(textEditorElement, runCommand);
+
+      // Expect results.
+      const expectedSelection = expectedState.selection;
+      // - Range
+      const actualRange = textEditor.getSelectedBufferRange();
+      expect(actualRange).toBe(expectedSelection.range);
+      // - Text
+      const actualText = textEditor.getSelectedText();
+      expect(actualText).toBe(expectedSelection.text);
+
+  }
+
 };
