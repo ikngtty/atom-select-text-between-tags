@@ -34,8 +34,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'in text between tags', () => {
+      it('does when the cursor is as <foo>ab[I]cd</foo>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 56]
@@ -55,8 +54,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'on left end of text between tags', () => {
+      it('does when the cursor is as <foo>[I]abcd</foo>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 39]
@@ -76,8 +74,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'on right end of text between tags', () => {
+      it('does when the cursor is as <foo>abcd[I]</foo>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 68]
@@ -97,8 +94,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'in a start tag', () => {
+      it('does when the cursor is as <fo[I]o>abcd</foo>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 12]
@@ -118,8 +114,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'in an end tag', () => {
+      it('does when the cursor is as <foo>abcd</fo[I]o>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 72]
@@ -139,8 +134,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'on left end of a start tag', () => {
+      it('does when the cursor is as [I]<foo>abcd</foo>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 6]
@@ -160,8 +154,7 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('runs as expected when the cursor is '
-          + 'on right end of an end tag', () => {
+      it('does when the cursor is as <foo>abcd</foo>[I]', () => {
 
         const stateBeforeRun = {
           cursorPosition: [8, 75]
@@ -181,8 +174,8 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('selects latter text when the cursor is '
-          + 'on right end of an end tag and left end of a start tag', () => {
+      it('selects latter text when the cursor is ' +
+          'as <foo>abcd</foo>[I]<bar>efgh</bar>', () => {
 
         const stateBeforeRun = {
           cursorPosition: [9, 34]
@@ -203,7 +196,7 @@ describe('select-text-between-tags', () => {
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
         );
-        
+
       });
 
       // TODO: multilines situation
@@ -213,12 +206,12 @@ describe('select-text-between-tags', () => {
     describe('it is fast enough', () => {
 
       it('runs as expected when text is long', () => {
-        // TODO:
+        // TODO: long text
         throw 'not implemented';
       });
 
       it('runs as expected when text is nested deeply', () => {
-        // TODO:
+        // TODO: deep text
         throw 'not implemented';
       });
 
