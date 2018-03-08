@@ -46,7 +46,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -66,7 +66,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -86,7 +86,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -106,7 +106,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -126,7 +126,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -146,7 +146,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -166,7 +166,7 @@ describe('select-text-between-tags', () => {
 
         const expectedState = {
           selection: selectionHello
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -191,7 +191,7 @@ describe('select-text-between-tags', () => {
             range: [[9, 51], [9, 57]],
             text: 'b a r'
           }
-        }
+        };
 
         SpecHelpers.expectSelection(
           stateBeforeRun, runCommand, expectedState, textVerificationOptions
@@ -199,7 +199,78 @@ describe('select-text-between-tags', () => {
 
       });
 
-      // TODO: multilines situation
+      it('can selects multiline', () => {
+
+        const stateBeforeRun = {
+          cursorPosition: [11, 19]
+        }
+
+        const textVerificationOptions = [
+          {range: [[11, 16], [11, 20]], text: 'used'}
+        ];
+
+        const expectedState = {
+          selection: {
+            range: [[10, 23], [13, 6]],
+            text:
+`
+        This is used for tests.
+        <strong>If you edit this, the tests may break.</strong>
+      `
+          }
+        };
+
+        SpecHelpers.expectSelection(
+          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+        );
+
+      })
+
+      it('skips empty elements like <br>', () => {
+
+        const stateBeforeRun = {
+          cursorPosition: [16, 37]
+        }
+
+        const textVerificationOptions = [
+          {range: [[16, 34], [16, 42]], text: 'contains'}
+        ];
+
+        const expectedState = {
+          selection: {
+            range: [[16, 26], [16, 58]],
+            text: 'This<br>contains<br>breaks.<br/>'}
+        };
+
+        SpecHelpers.expectSelection(
+          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+        );
+
+      })
+
+      it('does when the cursor is as <li>ab[I]cd<li>efgh '
+          + 'about tags like <li>, which end tag can be omitted',
+          () => {
+
+        const stateBeforeRun = {
+          cursorPosition: [18, 22]
+        }
+
+        const textVerificationOptions = [
+          {range: [[18, 20], [18, 23]], text: '2nd'}
+        ];
+
+        const expectedState = {
+          selection: {
+            range: [[18, 20], [18, 24]],
+            text: '2nd '}
+        };
+
+        SpecHelpers.expectSelection(
+          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+        );
+
+      })
 
     });
 
