@@ -53,13 +53,15 @@ export default class {
    * NOTE: Atom's global variables are used.
    * NOTE: Requires that a text editor is active.
    *
-   * @param  {Object}   stateBeforeRun
-   * @param  {string}   runCommand
-   * @param  {Object}   expectedState
-   * @param  {Object[]} textVerificationOptions
+   * @param  {jasmine.Spec} spec
+   * @param  {Object}       stateBeforeRun
+   * @param  {String}       runCommand
+   * @param  {Object}       expectedState
+   * @param  {Object[]}     textVerificationOptions
    * @return {undefined}
    */
   static expectSelection(
+    spec,
     stateBeforeRun,
     runCommand,
     expectedState,
@@ -67,6 +69,8 @@ export default class {
 
       const textEditor = atom.workspace.getActiveTextEditor();
       const textEditorElement = atom.views.getView(textEditor);
+
+      this.addMyMatchers(spec);
 
       // Verify text in the editor.
       // (It is expected that the verified part is around the position
@@ -77,7 +81,7 @@ export default class {
         textEditor.setSelectedBufferRange(vOption.range);
         const actualText = textEditor.getSelectedText();
 
-        expect(actualText).toBeBeforeRun(vOption.text);
+        spec.expect(actualText).toBeBeforeRun(vOption.text);
       }
 
       // Set the cursor.
@@ -90,10 +94,10 @@ export default class {
       const expectedSelection = expectedState.selection;
       // - Range
       const actualRange = textEditor.getSelectedBufferRange();
-      expect(actualRange).toBe(expectedSelection.range);
+      spec.expect(actualRange).toBe(expectedSelection.range);
       // - Text
       const actualText = textEditor.getSelectedText();
-      expect(actualText).toBe(expectedSelection.text);
+      spec.expect(actualText).toBe(expectedSelection.text);
 
   }
 

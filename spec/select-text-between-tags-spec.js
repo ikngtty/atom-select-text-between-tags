@@ -20,13 +20,9 @@ describe('select-text-between-tags', () => {
         text: 'Hello! This is a sample file.'
       };
 
-      // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
-      // an unexpected object.
       // NOTE: I wanna use 'beforeAll' to avoid to call this many times,
       // but unfortunetely our Jasmine's version is 1.3.1.
-      beforeEach(function() {
-
-        SpecHelpers.addMyMatchers(this);
+      beforeEach(() => {
 
         // NOTE: It needs to be done in order to get an active text editor
         // in each spec.
@@ -34,7 +30,9 @@ describe('select-text-between-tags', () => {
 
       });
 
-      it('does when the cursor is as <foo>ab[I]cd</foo>', () => {
+      // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
+      // an unexpected object.
+      it('does when the cursor is as <foo>ab[I]cd</foo>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 56]
@@ -49,12 +47,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as <foo>[I]abcd</foo>', () => {
+      it('does when the cursor is as <foo>[I]abcd</foo>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 39]
@@ -69,12 +68,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as <foo>abcd[I]</foo>', () => {
+      it('does when the cursor is as <foo>abcd[I]</foo>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 68]
@@ -89,12 +89,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as <fo[I]o>abcd</foo>', () => {
+      it('does when the cursor is as <fo[I]o>abcd</foo>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 12]
@@ -109,12 +110,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as <foo>abcd</fo[I]o>', () => {
+      it('does when the cursor is as <foo>abcd</fo[I]o>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 72]
@@ -129,12 +131,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as [I]<foo>abcd</foo>', () => {
+      it('does when the cursor is as [I]<foo>abcd</foo>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 6]
@@ -149,12 +152,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('does when the cursor is as <foo>abcd</foo>[I]', () => {
+      it('does when the cursor is as <foo>abcd</foo>[I]', function() {
 
         const stateBeforeRun = {
           cursorPosition: [8, 75]
@@ -169,13 +173,14 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
       it('selects latter text when the cursor is ' +
-          'as <foo>abcd</foo>[I]<bar>efgh</bar>', () => {
+          'as <foo>abcd</foo>[I]<bar>efgh</bar>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [9, 34]
@@ -194,12 +199,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       });
 
-      it('can selects multiline', () => {
+      it('can selects multiline', function() {
 
         const stateBeforeRun = {
           cursorPosition: [11, 19]
@@ -221,12 +227,13 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       })
 
-      it('skips empty elements like <br>', () => {
+      it('skips empty elements like <br>', function() {
 
         const stateBeforeRun = {
           cursorPosition: [16, 37]
@@ -243,14 +250,15 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       })
 
       it('does when the cursor is as <li>ab[I]cd<li>efgh '
           + 'about tags like <li>, which end tag can be omitted',
-          () => {
+          function() {
 
         const stateBeforeRun = {
           cursorPosition: [18, 22]
@@ -267,7 +275,8 @@ describe('select-text-between-tags', () => {
         };
 
         SpecHelpers.expectSelection(
-          stateBeforeRun, runCommand, expectedState, textVerificationOptions
+          this, stateBeforeRun, runCommand, expectedState,
+          textVerificationOptions
         );
 
       })
