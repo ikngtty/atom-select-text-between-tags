@@ -7,10 +7,8 @@ export default class {
 
   /**
    * Adds custom useful matchers to a context.
-   *
    * HACK: Avoid to overwrite redunduntly.
    * This may be called more than once in a spec.
-   *
    * @param {jasmine.Spec} spec - Add them to this.
    */
   static addMyMatchers(spec) {
@@ -19,10 +17,9 @@ export default class {
       /**
        * Compares as same as 'toBe'. In addition, this signalize that
        * the behavior is in preparation.
-       *
-       * @param  {*}       expected - An expected value.
+       * @param {*} expected - An expected value.
        * @return {boolean} Is the behavior as expected ?
-       * @this   {jasmine.Matchers} NOTE: The type is unsertain.
+       * @this {jasmine.Matchers} NOTE: The type is unsertain.
        */
       toBeBeforeRun: function(expected) {
 
@@ -48,17 +45,37 @@ export default class {
   }
 
   /**
+   * @typedef {Object} expectSelection~StateBeforeRun
+   * @property {Range} cursorPosition
+   */
+  /**
+   * @typedef {Object} expectSelection~Selection
+   * @property {Range} range
+   * @property {string} text
+   */
+  /**
+   * @typedef {Object} expectSelection~ExpectedState
+   * @property {expectSelection~Selection} selection
+   */
+  /**
+   * @typedef {Object} expectSelection~TextVerificationOption
+   * @property {Range} range
+   * @property {string} text
+   */
+  /**
+   * @typedef {Object} expectSelection~Result
+   * @property {number} elaspedMs
+   */
+  /**
    * Expect the whole behavior about selection.
-   *
    * NOTE: Atom's global variables are used.
    * NOTE: Requires that a text editor is active.
-   *
-   * @param  {jasmine.Spec} spec
-   * @param  {Object}       stateBeforeRun
-   * @param  {String}       runCommand
-   * @param  {Object}       expectedState
-   * @param  {Object[]}     textVerificationOptions
-   * @return {Object}       - an additional result information.
+   * @param {jasmine.Spec} spec
+   * @param {expectSelection~StateBeforeRun} stateBeforeRun
+   * @param {string} runCommand
+   * @param {expectSelection~ExpectedState} expectedState
+   * @param {expectSelection~TextVerificationOption[]} textVerificationOptions
+   * @return {expectSelection~Result} - an additional result information.
    */
   static expectSelection(
     spec,
