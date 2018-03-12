@@ -58,7 +58,7 @@ export default class {
    * @param  {String}       runCommand
    * @param  {Object}       expectedState
    * @param  {Object[]}     textVerificationOptions
-   * @return {undefined}
+   * @return {Object}       - an additional result information.
    */
   static expectSelection(
     spec,
@@ -67,6 +67,7 @@ export default class {
     expectedState,
     textVerificationOptions = []) {
 
+      const result = {};
       const textEditor = atom.workspace.getActiveTextEditor();
       const textEditorElement = atom.views.getView(textEditor);
 
@@ -88,7 +89,10 @@ export default class {
       textEditor.setCursorBufferPosition(stateBeforeRun.cursorPosition);
 
       // Run.
+      const start = new Date();
       atom.commands.dispatch(textEditorElement, runCommand);
+      const end = new Date();
+      result.elaspedMs = end - start;
 
       // Expect results.
       const expectedSelection = expectedState.selection;
@@ -99,6 +103,8 @@ export default class {
       const actualText = textEditor.getSelectedText();
       spec.expect(actualText).toBe(expectedSelection.text);
 
+      return result;
+
   }
 
-};
+}

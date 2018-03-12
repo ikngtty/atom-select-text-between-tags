@@ -3,6 +3,7 @@
 // import SelectTextBetweenTags from '../lib/select-text-between-tags';
 import SpecHelpers from './helpers/spec-helpers';
 import FixturesPath from './constants/fixtures-path';
+import createLargeText from './scripts/create-large-text';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -241,12 +242,35 @@ describe('select-text-between-tags', () => {
 
     describe('it is fast enough', () => {
 
-      it('runs as expected when text is long', () => {
-        // TODO: long text
-        throw 'not implemented';
+      it('is when text is large', function() {
+        const largePath = FixturesPath.getPathLarge();
+        const stateBeforeRun = {
+          cursorPosition: [9999, 23]
+        }
+        const textVerificationOptions = [
+          {range: [[9999, 22], [9999, 24]], text: 'is'}
+        ];
+        const expectedState = {
+          selection: {
+            range: [[9999, 17], [9999, 34]],
+            text: 'This is contents.'}
+        };
+
+        createLargeText();
+
+        waitsForPromise(() => atom.workspace.open(largePath));
+        runs(() => {
+          const result = SpecHelpers.expectSelection(
+            this, stateBeforeRun, runCommand, expectedState,
+            textVerificationOptions
+          );
+
+          // NOTE: Required speed is defined just with my feelings.
+          expect(result.elaspedMs).toBeLessThan(300);
+        });
       });
 
-      it('runs as expected when text is nested deeply', () => {
+      it('is when text is nested deeply', function() {
         // TODO: deep text
         throw 'not implemented';
       });
