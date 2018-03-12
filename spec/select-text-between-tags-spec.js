@@ -2,6 +2,7 @@
 
 // import SelectTextBetweenTags from '../lib/select-text-between-tags';
 import SpecHelpers from './helpers/spec-helpers';
+import FixturesPath from './constants/fixtures-path';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -14,6 +15,7 @@ describe('select-text-between-tags', () => {
     const runCommand = 'select-text-between-tags:select';
 
     describe('it selects text between tags', () => {
+      const samplePath = FixturesPath.getPathSample();
 
       const selectionHello = {
         range: [[8, 39], [8, 68]],
@@ -26,8 +28,8 @@ describe('select-text-between-tags', () => {
 
         // NOTE: It needs to be done in order to get an active text editor
         // in each spec.
-        waitsForPromise(() => atom.workspace.open('sample.html'));
-
+        waitsForPromise(() => atom.workspace.open(samplePath));
+        
       });
 
       // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
