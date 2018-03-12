@@ -17,7 +17,7 @@ describe('select-text-between-tags', () => {
     const runCommand = 'select-text-between-tags:select';
 
     describe('it selects text between tags', () => {
-      const samplePath = FixturesPath.getPathSample();
+      const sampleTextPath = FixturesPath.sampleTextPath;
 
       const selectionHello = {
         range: [[8, 39], [8, 68]],
@@ -29,7 +29,7 @@ describe('select-text-between-tags', () => {
       beforeEach(() => {
         // NOTE: It needs to be done in order to get an active text editor
         // in each spec.
-        waitsForPromise(() => atom.workspace.open(samplePath));
+        waitsForPromise(() => atom.workspace.open(sampleTextPath));
       });
 
       // NOTE: An arrow function cannot be used, cuz it makes 'this' indicate
@@ -244,7 +244,7 @@ describe('select-text-between-tags', () => {
     describe('it is fast enough', () => {
 
       it('is when text is large', function() {
-        const largePath = FixturesPath.getPathLarge();
+        const textPath = FixturesPath.largeTextPath;
         const stateBeforeRun = {
           cursorPosition: [9999, 23]
         }
@@ -259,7 +259,7 @@ describe('select-text-between-tags', () => {
 
         waitsForPromise(async function() {
           await createLargeText();
-          await atom.workspace.open(largePath);
+          await atom.workspace.open(textPath);
         });
 
         runs(() => {
@@ -274,7 +274,7 @@ describe('select-text-between-tags', () => {
       });
 
       it('is when text is nested deeply', function() {
-        const deepPath = FixturesPath.getPathDeep();
+        const textPath = FixturesPath.deepTextPath;
         const stateBeforeRun = {
           cursorPosition: [7003, 24]
         }
@@ -289,7 +289,7 @@ describe('select-text-between-tags', () => {
 
         waitsForPromise(async function() {
           await createDeepText();
-          await atom.workspace.open(deepPath);
+          await atom.workspace.open(textPath);
         });
 
         runs(() => {
