@@ -4,6 +4,7 @@
 import SpecHelpers from './helpers/spec-helpers';
 import FixturesPath from './constants/fixtures-path';
 import createLargeText from './scripts/create-large-text';
+import createDeepText from './scripts/create-deep-text';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -273,8 +274,33 @@ describe('select-text-between-tags', () => {
       });
 
       it('is when text is nested deeply', function() {
-        // TODO: deep text
-        throw 'not implemented';
+        const deepPath = FixturesPath.getPathDeep();
+        const stateBeforeRun = {
+          cursorPosition: [7003, 24]
+        }
+        const textVerificationOptions = [
+          {range: [[7003, 23], [7003, 25]], text: 'is'}
+        ];
+        const expectedState = {
+          selection: {
+            range: [[7003, 18], [7003, 35]],
+            text: 'This is contents.'}
+        };
+
+        waitsForPromise(async function() {
+          await createDeepText();
+          await atom.workspace.open(deepPath);
+        });
+
+        runs(() => {
+          const result = SpecHelpers.expectSelection(
+            this, stateBeforeRun, runCommand, expectedState,
+            textVerificationOptions
+          );
+
+          // NOTE: Required speed is defined just with my feelings.
+          expect(result.elaspedMs).toBeLessThan(300);
+        });
       });
 
     });
