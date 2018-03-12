@@ -50,7 +50,6 @@ describe('CommonHelpers', () => {
 
   describe('times', () => {
     it('does', () => {
-
       let num0 = 0;
       CommonHelpers.times(0, () => num0++);
       expect(num0).toBe(0);
@@ -62,7 +61,6 @@ describe('CommonHelpers', () => {
       let num2 = 0;
       CommonHelpers.times(2, () => num2++);
       expect(num2).toBe(2);
-
     });
   });
 
