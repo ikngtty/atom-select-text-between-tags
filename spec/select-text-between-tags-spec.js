@@ -256,9 +256,11 @@ describe('select-text-between-tags', () => {
             text: 'This is contents.'}
         };
 
-        createLargeText();
+        waitsForPromise(async function() {
+          await createLargeText();
+          await atom.workspace.open(largePath);
+        });
 
-        waitsForPromise(() => atom.workspace.open(largePath));
         runs(() => {
           const result = SpecHelpers.expectSelection(
             this, stateBeforeRun, runCommand, expectedState,

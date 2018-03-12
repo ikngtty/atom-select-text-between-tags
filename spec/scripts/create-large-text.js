@@ -6,28 +6,29 @@ import FixturesPath from '../constants/fixtures-path';
 
 const createdPath = FixturesPath.getPathLarge();
 
-export default function() {
+/**
+ * @return {Promise} - To create a file.
+ */
+export default async function() {
 
   // Delete an old file.
   if (fs.existsSync(createdPath)) {
     fs.removeSync(createdPath);
   }
 
-  // Create.
-  const text = CommonHelpers.range(9999)
-    .map((e) => "<div class='foo'>This is contents.</div>\r\n")
-    .reduce((sum, e) => sum + e);
-  fs.writeFileSync(createdPath, text);
+  // Return a promise to create a file.
+  return new Promise((resolve) => {
 
-  // HACK: Decrease memory comsumption.
-  // To use write stream, asyncronony should be resolved.
-  //
-  // const ws = fs.createWriteStream(createdPath);
-  //
-  // CommonHelpers.times(10000, () => {
-  //   ws.write("<div class='foo'>This is contents.</div>\r\n");
-  // })
-  //
-  // ws.end();
+    // NOTE: Use a write stream cuz of small memory usage.
+    const ws = fs.createWriteStream(createdPath);
+    // The promise is resolved when a write stream is closed.
+    ws.on('close', () => resolve());
 
+    CommonHelpers.times(10000, () => {
+      ws.write("<div class='foo'>This is contents.</div>\r\n");
+    });
+
+    ws.end();
+
+  });
 }
