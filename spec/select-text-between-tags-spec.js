@@ -268,6 +268,8 @@ describe('select-text-between-tags', () => {
             textVerificationOptions
           );
 
+          console.log('Performance when text is large: '
+                      + `${result.elaspedMs}ms`);
           // NOTE: Required speed is defined just with my feelings.
           expect(result.elaspedMs).toBeLessThan(300);
         });
@@ -298,6 +300,8 @@ describe('select-text-between-tags', () => {
             textVerificationOptions
           );
 
+          console.log('Performance when text is nested deeply: '
+                      + `${result.elaspedMs}ms`);
           // NOTE: Required speed is defined just with my feelings.
           expect(result.elaspedMs).toBeLessThan(300);
         });
