@@ -3,7 +3,7 @@
 /**
  * NOTE: Depends on Jasmine 1.3.1.
  */
-export default class {
+export default class SpecHelpers {
 
   /**
    * Adds custom useful matchers to a context.

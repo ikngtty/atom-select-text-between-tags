@@ -7,7 +7,7 @@ import createText from './create-text';
 /**
  * @return {Promise.<undefined>} - To create a file.
  */
-export default async function() {
+export default async function createDeepText() {
   const createdPath = FixturesPath.deepTextPath;
   return createText(createdPath, writeContents);
 }

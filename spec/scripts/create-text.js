@@ -14,7 +14,7 @@ import FixturesPath from '../constants/fixtures-path';
  * @param {writeContentsCallback} writeContents
  * @return {Promise.<undefined>} - To create a file.
  */
-export default async function(createdPath, writeContents) {
+export default async function createText(createdPath, writeContents) {
 
   if (fs.existsSync(createdPath)) {
     // Delete an old file.
