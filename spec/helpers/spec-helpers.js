@@ -46,11 +46,11 @@ export default class SpecHelpers {
 
   /**
    * @typedef {Object} expectSelection~StateBeforeRun
-   * @property {Range} cursorPosition
+   * @property {Range} cursorPosition - Of atom.
    */
   /**
    * @typedef {Object} expectSelection~Selection
-   * @property {Range} range
+   * @property {Range} range - Of atom.
    * @property {string} text
    */
   /**
@@ -59,7 +59,7 @@ export default class SpecHelpers {
    */
   /**
    * @typedef {Object} expectSelection~TextVerificationOption
-   * @property {Range} range
+   * @property {Range} range - Of atom.
    * @property {string} text
    */
   /**
