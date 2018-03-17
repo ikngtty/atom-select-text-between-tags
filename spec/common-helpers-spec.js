@@ -64,4 +64,13 @@ describe('CommonHelpers', () => {
     });
   });
 
+  describe('last', () => {
+    it('does', () => {
+      expect(CommonHelpers.last([])).toBe(undefined);
+      expect(CommonHelpers.last([10])).toBe(10);
+      expect(CommonHelpers.last([10, 20])).toBe(20);
+      expect(CommonHelpers.last([10, 20, 30])).toBe(30);
+    });
+  });
+
 });
