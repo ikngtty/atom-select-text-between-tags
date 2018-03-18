@@ -31,7 +31,7 @@ export default async function createText(createdPath, writeContents) {
     // NOTE: Use a write stream cuz of small memory usage.
     const ws = fs.createWriteStream(createdPath);
     // The promise is resolved when a write stream is closed.
-    ws.on('close', () => resolve());
+    ws.on('close', resolve);
 
     writeContents(ws);
 
