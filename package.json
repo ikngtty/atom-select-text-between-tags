@@ -11,7 +11,7 @@
     "xml"
   ],
   "activationCommands": {
-    "atom-workspace": "select-text-between-tags:select"
+    "atom-text-editor": "select-text-between-tags:select"
   },
   "repository": "https://github.com/ikngtty/atom-select-text-between-tags",
   "license": "MIT",
