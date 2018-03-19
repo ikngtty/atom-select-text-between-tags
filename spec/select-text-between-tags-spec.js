@@ -12,6 +12,10 @@ import createDeepText from './scripts/create-deep-text';
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe('select-text-between-tags', () => {
+  
+  beforeEach(() => {
+    atom.packages.activatePackage('select-text-between-tags');
+  });
 
   describe('when the :select event is triggred', () => {
     const runCommand = 'select-text-between-tags:select';
