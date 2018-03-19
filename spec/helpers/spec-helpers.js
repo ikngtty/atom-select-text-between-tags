@@ -115,7 +115,7 @@ export default class SpecHelpers {
       const expectedSelection = expectedState.selection;
       // - Range
       const actualRange = textEditor.getSelectedBufferRange();
-      spec.expect(actualRange).toBe(expectedSelection.range);
+      spec.expect(actualRange).toEqual(expectedSelection.range);
       // - Text
       const actualText = textEditor.getSelectedText();
       spec.expect(actualText).toBe(expectedSelection.text);
