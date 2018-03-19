@@ -1,8 +1,8 @@
 'use babel';
 
-import CommonHelpers from '../../lib/common-helpers';
-import FixturesPath from '../constants/fixtures-path';
 import createText from './create-text';
+import FixturesPath from '../constants/fixtures-path';
+import CommonHelpers from '../../lib/helpers/common-helpers';
 
 /**
  * @return {Promise.<undefined>} - To create a file.

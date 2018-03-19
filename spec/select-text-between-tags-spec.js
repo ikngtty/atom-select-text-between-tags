@@ -1,8 +1,8 @@
 'use babel';
 
 // import SelectTextBetweenTags from '../lib/select-text-between-tags';
-import SpecHelpers from './helpers/spec-helpers';
 import FixturesPath from './constants/fixtures-path';
+import SpecHelpers from './helpers/spec-helpers';
 import createLargeText from './scripts/create-large-text';
 import createDeepText from './scripts/create-deep-text';
 

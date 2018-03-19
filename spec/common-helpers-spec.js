@@ -1,6 +1,6 @@
 'use babel';
 
-import CommonHelpers from '../lib/common-helpers';
+import CommonHelpers from '../lib/helpers/common-helpers';
 
 describe('CommonHelpers', () => {
 
