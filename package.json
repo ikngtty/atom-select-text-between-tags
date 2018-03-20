@@ -1,7 +1,7 @@
 {
   "name": "select-text-between-tags",
   "main": "./lib/select-text-between-tags",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Selects text between <foo> and </foo> with `⌘->`.",
   "keywords": [
     "atom",
