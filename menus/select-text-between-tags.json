@@ -2,7 +2,7 @@
   "context-menu": {
     "atom-text-editor": [
       {
-        "label": "Select text between tags",
+        "label": "Select Text between Tags",
         "command": "select-text-between-tags:select"
       }
     ]
@@ -12,10 +12,10 @@
       "label": "Packages",
       "submenu": [
         {
-          "label": "select-text-between-tags",
+          "label": "Select Text between Tags",
           "submenu": [
             {
-              "label": "Select text between tags",
+              "label": "Select",
               "command": "select-text-between-tags:select"
             }
           ]
