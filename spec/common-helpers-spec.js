@@ -3,7 +3,6 @@
 import CommonHelpers from '../lib/helpers/common-helpers';
 
 describe('CommonHelpers', () => {
-
   describe('overwriteArray', () => {
     it('does', () => {
       expect(CommonHelpers.overwriteArray([10, 20], [100, undefined, 300]))
@@ -14,9 +13,7 @@ describe('CommonHelpers', () => {
   });
 
   describe('range', () => {
-
     it('throw errors when arguments are invalid', () => {
-
       expect(() => CommonHelpers.range())
         .toThrow('No arguments.');
 
@@ -27,7 +24,6 @@ describe('CommonHelpers', () => {
 
       expect(() => CommonHelpers.range(1, 2, 0))
         .toThrow('An endless loop.');
-
     });
 
     it('does', () => {
@@ -45,7 +41,6 @@ describe('CommonHelpers', () => {
       expect(CommonHelpers.range(-5, -5, -1)).toEqual([-5]);
       expect(CommonHelpers.range(-5, -4, -1)).toEqual([]);
     });
-
   });
 
   describe('times', () => {
@@ -72,5 +67,4 @@ describe('CommonHelpers', () => {
       expect(CommonHelpers.last([10, 20, 30])).toBe(30);
     });
   });
-
 });

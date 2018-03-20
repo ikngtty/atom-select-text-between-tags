@@ -27,15 +27,11 @@ export default async function createText(createdPath, writeContents) {
 
   // Return a promise to create a file.
   return new Promise((resolve) => {
-
     // NOTE: Use a write stream cuz of small memory usage.
     const ws = fs.createWriteStream(createdPath);
     // The promise is resolved when a write stream is closed.
     ws.on('close', resolve);
-
     writeContents(ws);
-
     ws.end();
-
   });
 }

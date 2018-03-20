@@ -12,7 +12,6 @@ import createDeepText from './scripts/create-deep-text';
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe('select-text-between-tags', () => {
-  
   beforeEach(() => {
     atom.packages.activatePackage('select-text-between-tags');
   });
@@ -22,14 +21,13 @@ describe('select-text-between-tags', () => {
 
     describe('it selects text between tags', () => {
       const sampleTextPath = FixturesPath.sampleTextPath;
-
       const selectionHello = {
         range: [[8, 39], [8, 68]],
         text: 'Hello! This is a sample file.'
       };
 
       // NOTE: I wanna use 'beforeAll' to avoid to call this many times,
-      // but unfortunetely our Jasmine's version is 1.3.1.
+      // but unfortunetely our Jasmine's version is probably 1.3.1.
       beforeEach(() => {
         // NOTE: It needs to be done in order to get an active text editor
         // in each spec.
@@ -246,9 +244,13 @@ describe('select-text-between-tags', () => {
     });
 
     describe('it is fast enough', () => {
-
       it('is when text is large', function() {
         const textPath = FixturesPath.largeTextPath;
+        waitsForPromise(async function() {
+          await createLargeText();
+          await atom.workspace.open(textPath);
+        });
+
         const stateBeforeRun = {
           cursorPosition: [9999, 23]
         }
@@ -260,12 +262,6 @@ describe('select-text-between-tags', () => {
             range: [[9999, 17], [9999, 34]],
             text: 'This is contents.'}
         };
-
-        waitsForPromise(async function() {
-          await createLargeText();
-          await atom.workspace.open(textPath);
-        });
-
         runs(() => {
           const result = SpecHelpers.expectSelection(
             this, stateBeforeRun, runCommand, expectedState,
@@ -281,6 +277,11 @@ describe('select-text-between-tags', () => {
 
       it('is when text is nested deeply', function() {
         const textPath = FixturesPath.deepTextPath;
+        waitsForPromise(async function() {
+          await createDeepText();
+          await atom.workspace.open(textPath);
+        });
+
         const stateBeforeRun = {
           cursorPosition: [7003, 24]
         }
@@ -292,12 +293,6 @@ describe('select-text-between-tags', () => {
             range: [[7003, 18], [7003, 35]],
             text: 'This is contents.'}
         };
-
-        waitsForPromise(async function() {
-          await createDeepText();
-          await atom.workspace.open(textPath);
-        });
-
         runs(() => {
           const result = SpecHelpers.expectSelection(
             this, stateBeforeRun, runCommand, expectedState,
@@ -310,9 +305,6 @@ describe('select-text-between-tags', () => {
           expect(result.elaspedMs).toBeLessThan(300);
         });
       });
-
     });
-
   });
-
 });

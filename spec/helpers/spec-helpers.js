@@ -4,7 +4,6 @@
  * NOTE: Depends on Jasmine 1.3.1.
  */
 export default class SpecHelpers {
-
   /**
    * Adds custom useful matchers to a context.
    * HACK: Avoid to overwrite redunduntly.
@@ -13,7 +12,6 @@ export default class SpecHelpers {
    */
   static addMyMatchers(spec) {
     spec.addMatchers({
-
       /**
        * Compares as same as 'toBe'. In addition, this signalize that
        * the behavior is in preparation.
@@ -22,7 +20,6 @@ export default class SpecHelpers {
        * @this {jasmine.Matchers} NOTE: The type is unsertain.
        */
       toBeBeforeRun: function(expected) {
-
         // Compare.
         const pass = (this.actual === expected);
 
@@ -38,9 +35,7 @@ export default class SpecHelpers {
         this.message = () => message;
 
         return pass;
-
       }
-
     });
   }
 
@@ -83,10 +78,8 @@ export default class SpecHelpers {
     runCommand,
     expectedState,
     textVerificationOptions = []) {
-
       const result = {};
-      const textEditor = atom.workspace.getActiveTextEditor();
-      const textEditorElement = atom.views.getView(textEditor);
+      const editor = atom.workspace.getActiveTextEditor();
 
       this.addMyMatchers(spec);
 
@@ -96,32 +89,31 @@ export default class SpecHelpers {
       //  between the specified cursor position and the expected one,
       //  or unexpected changes in the text.)
       for (const vOption of textVerificationOptions) {
-        textEditor.setSelectedBufferRange(vOption.range);
-        const actualText = textEditor.getSelectedText();
+        editor.setSelectedBufferRange(vOption.range);
 
+        const actualText = editor.getSelectedText();
         spec.expect(actualText).toBeBeforeRun(vOption.text);
       }
 
       // Set the cursor.
-      textEditor.setCursorBufferPosition(stateBeforeRun.cursorPosition);
+      editor.setCursorBufferPosition(stateBeforeRun.cursorPosition);
 
       // Run.
+      const editorElement = atom.views.getView(editor);
       const start = new Date();
-      atom.commands.dispatch(textEditorElement, runCommand);
+      atom.commands.dispatch(editorElement, runCommand);
       const end = new Date();
       result.elaspedMs = end - start;
 
       // Expect results.
       const expectedSelection = expectedState.selection;
       // - Range
-      const actualRange = textEditor.getSelectedBufferRange();
+      const actualRange = editor.getSelectedBufferRange();
       spec.expect(actualRange).toEqual(expectedSelection.range);
       // - Text
-      const actualText = textEditor.getSelectedText();
+      const actualText = editor.getSelectedText();
       spec.expect(actualText).toBe(expectedSelection.text);
 
       return result;
-
   }
-
 }
