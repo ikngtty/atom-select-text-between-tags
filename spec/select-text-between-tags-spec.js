@@ -155,7 +155,8 @@ describe('select-text-between-tags', () => {
         );
       });
 
-      it('selects latter text when the cursor is ' +
+      // A canceled idea.
+      xit('selects latter text when the cursor is ' +
           'as <foo>abcd</foo>[I]<bar>efgh</bar>', function() {
         const stateBeforeRun = {
           cursorPosition: [9, 34]
@@ -220,7 +221,8 @@ describe('select-text-between-tags', () => {
         );
       })
 
-      it('does when the cursor is as <li>ab[I]cd<li>efgh '
+      // TODO: Implement a <li> pattern.
+      xit('does when the cursor is as <li>ab[I]cd<li>efgh '
           + 'about tags like <li>, which end tag can be omitted',
           function() {
         const stateBeforeRun = {
